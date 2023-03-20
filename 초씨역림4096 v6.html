@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #result {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        #history {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #history div {
+            margin-right: 10px;
+            font-size: 48px;
+            border: 1px solid black;
+            padding: 5px;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border:none;
+            color:white;
+            padding:15px 32px;
+            text-align:center;
+            text-decoration:none;
+            display:inline-block;
+            font-size:16px
+        }
+    </style>
+</head>
+<body>
+
+    <div id="result"></div>
+    <button onclick="generateNumber()">焦氏易林 4096</button> <button onclick="saveText()">저장</button>
+
+    <div id="history"></div>
+
+    <script>
+        const hexagrams = [ "1乾䷀", "2坤䷁", "3屯䷂", "4蒙䷃", "5需䷄", "6訟䷅", "7師䷆", "8比䷇", "9小畜䷈", "10履䷉",
+        "11泰䷊", "12否䷋", "13同人䷌", "14大有䷍", "15謙䷎", "16豫䷏", "17隨䷐", "18蠱䷑", "19臨䷒", "20觀䷓",
+        "21噬嗑䷔", "22賁䷕", "23剝䷖", "24復䷗", "25无妄䷘", "26大畜䷙", "27頤䷚", "28大過䷛", "29坎䷜", "30離䷝",
+        "31咸䷞", "32恒䷟", "33遯䷠", "34大壯䷡", "35晉䷢", "36明夷䷣", "37家人䷤", "38睽䷥", "39蹇䷦", "40解䷧",
+        "41損䷨", "42益䷩", "43夬䷪", "44姤䷫", "45萃䷬", "46升䷭", "47困䷮", "48井䷯", "49革䷰", "50鼎䷱",
+        "51震䷲", "52艮䷳", "53漸䷴", "54歸妹䷵", "55豊䷶", "56旅䷷", "57巽䷸", "58兌䷹", "59渙䷺", "60節䷻",
+        "61中孚䷼", "62小過䷽", "63旣濟䷾", "64未濟䷿"];
+
+      function generateNumber() {
+          let num = Math.floor(Math.random() * (4096 - 1 + 1)) + 1;
+
+          let quotient = Math.floor(num / 64);
+          let remainder = num % 64;
+
+          if (remainder === 0) {
+              remainder = 64;
+              quotient -=1 ;
+          }
+
+          document.getElementById("result").innerHTML = hexagrams[quotient] + ", "+ hexagrams[remainder];
+
+          let history = document.getElementById("history");
+          let newEntry = document.createElement("div");
+          newEntry.innerHTML = hexagrams[quotient] + ", "+ hexagrams[remainder];
+
+          history.appendChild(newEntry);
+      }
+
+      function saveText() {
+          let historyDivs = document.querySelectorAll("#history div");
+          let historyText = "";
+          
+          for (let i=0; i<historyDivs.length; i++) {
+              historyText += historyDivs[i].innerHTML + "\n";
+          }
+
+          let blob = new Blob([historyText], {type:"text/plain;charset=utf-8"});
+          
+          if (window.navigator.msSaveOrOpenBlob) { // IE & Edge
+              window.navigator.msSaveOrOpenBlob(blob, "history.txt");
+              
+           } else { // Other browsers
+               let a = document.createElement("a");
+               a.href = URL.createObjectURL(blob);
+               a.download ="history.txt";
+               document.body.appendChild(a);
+               a.click();
+               setTimeout(function(){
+                   document.body.removeChild(a);
+                   window.URL.revokeObjectURL(a.href);  
+               },0); 
+           }
+      }
+    </script>
+
+</body>
+</html>
