@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #result {
+            font-size: 48px;
+            margin-bottom: 10px;
+            border: 2px solid Green;
+            padding: 5px;
+        }
+        #history {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #history div {
+            margin-right: 10px;
+            font-size: 36px;
+            border: 1px solid black;
+            padding: 5px;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border:none;
+            color:white;
+            padding:15px 32px;
+            text-align:center;
+            text-decoration:none;
+            display:inline-block;
+            font-size:16px
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="generateNumber(1)">서죽일변서</button> 
+    <button onclick="generateNumber(2)">서죽이변서</button> 
+    <button onclick="generateNumber(3)">서죽삼변서</button> 
+    <button onclick="saveText()">저장</button>
+
+    <div id="result"></div>
+    <div id="history"></div>
+
+    <script>
+      let hexagrams = [ "1.乾天", "2.兌澤", "3.離火", "4.震雷", "5.巽風", "6.坎水", "7.艮山", "8.坤地"];
+      let resultArray = []; 
+
+      function generateNumber(type) {
+          if (type ===1) { 
+              document.getElementById("result").innerHTML = "";
+              resultArray=[];
+          }
+
+          let num = Math.floor(Math.random() * (48 - 1 + 1)) + 1;
+
+          let result = "";
+          if (type === 1 || type ===2) {
+              result = ((49 - num) +1) %8 ;
+              if (result ===0) result =8; //수정된 부분
+              document.getElementById("result").innerHTML += hexagrams[result-1] + ' '; 
+              resultArray.push(hexagrams[result-1]); 
+          } else if (type ===3) {
+              result = ((49 - num) +1) %6 ;
+              document.getElementById("result").innerHTML += result; 
+              resultArray.push(result); 
+
+              if (resultArray.length ===3){ 
+                  let history = document.getElementById("history");
+                  let newEntry = document.createElement("div");
+                  newEntry.innerHTML = resultArray.join(' '); 
+                  history.appendChild(newEntry);
+                  resultArray=[];
+              }
+          }
+
+          
+      }
+
+      function saveText() {
+          let historyDivs = document.querySelectorAll("#history div");
+          let historyText = "";
+          
+          for (let i=0; i<historyDivs.length; i++) {
+              historyText += historyDivs[i].innerHTML + "\n";
+          }
+
+         let blob = new Blob([historyText], {type:"text/plain;charset=utf-8"});
+          
+         if (window.navigator.msSaveOrOpenBlob) { // IE & Edge
+             window.navigator.msSaveOrOpenBlob(blob, "ichinghis.txt");
+              
+         } else { // Other browsers
+             let a = document.createElement("a");
+             a.href = URL.createObjectURL(blob);
+             a.download ="ichinghis.txt";
+             document.body.appendChild(a);
+             a.click();
+             setTimeout(function(){
+                 document.body.removeChild(a);
+                 window.URL.revokeObjectURL(a.href);  
+             },0); 
+         }
+      }
+    </script>
+
+</body>
+</html>

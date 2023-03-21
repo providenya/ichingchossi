@@ -72,12 +72,12 @@
           let blob = new Blob([historyText], {type:"text/plain;charset=utf-8"});
           
           if (window.navigator.msSaveOrOpenBlob) { // IE & Edge
-              window.navigator.msSaveOrOpenBlob(blob, "history.txt");
+              window.navigator.msSaveOrOpenBlob(blob, "cho4096his.txt");
               
            } else { // Other browsers
                let a = document.createElement("a");
                a.href = URL.createObjectURL(blob);
-               a.download ="history.txt";
+               a.download ="cho4096his.txt";
                document.body.appendChild(a);
                a.click();
                setTimeout(function(){
