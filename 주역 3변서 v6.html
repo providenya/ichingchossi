@@ -42,7 +42,7 @@
     <div id="history"></div>
 
     <script>
-      let hexagrams = [ "0", "1.乾天 ☰", "2.兌澤 ☱", "3.離火 ☲", "4.震雷 ☳", "5.巽風 ☴", "6.坎水 ☵", "7.艮山 ☶", "8.坤地 ☷"];
+      let hexagrams = [ "0", "1乾天 ☰", "2兌澤 ☱", "3離火 ☲", "4震雷 ☳", "5巽風 ☴", "6坎水 ☵", "7艮山 ☶", "8坤地 ☷"];
       let resultArray = []; 
 
       function generateNumber(type) {
@@ -62,8 +62,8 @@
           } else if (type ===3) {
               result = ((49 - num) +1) %6 ;
               if (result ===0) result =6;
-              document.getElementById("result").innerHTML += result; 
-              resultArray.push(result); 
+              document.getElementById("result").innerHTML += result + '爻'; 
+              resultArray.push(result + '爻'); 
 
               if (resultArray.length ===3){ 
                   let history = document.getElementById("history");
