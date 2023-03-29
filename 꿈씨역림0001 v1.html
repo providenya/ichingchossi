@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #result {
+            font-size: 48px;
+            margin-bottom: 10px;
+            border: 2px solid Green;
+            padding: 5px;
+        }
+        #history {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #history div {
+            margin-right: 10px;
+            font-size: 36px;
+            border: 1px solid black;
+            padding: 5px;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border:none;
+            color:white;
+            padding:15px 32px;
+            text-align:center;
+            text-decoration:none;
+            display:inline-block;
+            font-size:16px
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="generateNumber()">夢氏易林 0001</button> <button onclick="saveText()">저장</button>
+    <div id="result"></div>
+    <div id="history"></div>
+
+    <script>
+      function generateNumber() {
+          let num = Math.floor(Math.random() * (4096 - 1 + 1)) + 1;
+
+          let formattedNum = num.toString().padStart(4, '0');
+
+          document.getElementById("result").innerHTML = formattedNum;
+
+          let history = document.getElementById("history");
+          let newEntry = document.createElement("div");
+          newEntry.innerHTML = formattedNum;
+
+          history.appendChild(newEntry);
+      }
+
+      function saveText() {
+          let historyDivs = document.querySelectorAll("#history div");
+          let historyText = "";
+          
+          for (let i=0; i<historyDivs.length; i++) {
+              historyText += historyDivs[i].innerHTML + "\n";
+          }
+
+          let blob = new Blob([historyText], {type:"text/plain;charset=utf-8"});
+          
+          if (window.navigator.msSaveOrOpenBlob) { // IE & Edge
+              window.navigator.msSaveOrOpenBlob(blob, "randomNumbers.txt");
+              
+           } else { // Other browsers
+               let a = document.createElement("a");
+               a.href = URL.createObjectURL(blob);
+               a.download ="randomNumbers.txt";
+               document.body.appendChild(a);
+               a.click();
+               setTimeout(function(){
+                   document.body.removeChild(a);
+                   window.URL.revokeObjectURL(a.href);  
+               },0); 
+           }
+      }
+    </script>
+
+</body>
+</html>
