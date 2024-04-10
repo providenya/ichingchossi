@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #result {
+            font-size: 48px;
+            margin-bottom: 10px;
+            border: 2px solid Green;
+            padding: 5px;
+        }
+        #history {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #history div {
+            margin-right: 10px;
+            font-size: 36px;
+            border: 1px solid black;
+            padding: 5px;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border:none;
+            color:white;
+            padding:15px 32px;
+            text-align:center;
+            text-decoration:none;
+            display:inline-block;
+            font-size:16px
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="generateNumber(1)">일변서</button> 
+    <button onclick="generateNumber(2)">이변서</button> 
+    <button onclick="generateNumber(3)">삼변서</button>
+    <button onclick="generateNumber(4)">사변서</button>
+    <button onclick="generateNumber(5)">오변서</button>
+    <button onclick="generateNumber(6)">육변서</button>
+    <button onclick="generateNumber(7)">칠변서</button> 
+    <button onclick="saveText()">저장</button>
+
+    <div id="result"></div>
+    <div id="history"></div>
+
+    <script>
+let hexagrams = [ "0", "1양", "2음", "3양", "4음", "5양", "6음", "7艮山 ☶", "8坤地 ☷"];
+let resultArray = []; 
+
+function generateNumber(type) {
+    if (type === 1) { 
+        document.getElementById("result").innerHTML = "";
+        resultArray = [];
+    }
+
+    let num;
+    if (type === 1 || type === 2 || type === 3 || type === 4 || type === 5 || type === 6) {
+        num = Math.floor(Math.random() * 6) + 1; // 육면체 주사위
+        let result = hexagrams[num];
+        document.getElementById("result").innerHTML += result + ' ';
+        resultArray.push(result+ ' '); 
+    } else if (type === 7) {
+        num = Math.floor(Math.random() * 6) + 1; // 육면체 주사위
+        document.getElementById("result").innerHTML += num + '爻'; // 숫자 출력
+        resultArray.push(num+ '爻'); 
+
+        if (resultArray.length === 7) { 
+            let history = document.getElementById("history");
+            let newEntry = document.createElement("div");
+            newEntry.innerHTML = resultArray.join(' '); 
+            history.appendChild(newEntry);
+            resultArray = [];
+        }
+    }
+}
+
+function saveText() {
+    let historyDivs = document.querySelectorAll("#history div");
+    let historyText = "";
+    
+    for (let i = 0; i < historyDivs.length; i++) {
+        historyText += historyDivs[i].innerHTML + "\n";
+    }
+
+    let blob = new Blob([historyText], {type: "text/plain;charset=utf-8"});
+    
+    if (window.navigator.msSaveOrOpenBlob) { // IE & Edge
+        window.navigator.msSaveOrOpenBlob(blob, "ichinghis.txt");
+    } else { // Other browsers
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "ichinghis.txt";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function(){
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(a.href);  
+        }, 0); 
+    }
+}
+    </script>
+
+</body>
+</html>
