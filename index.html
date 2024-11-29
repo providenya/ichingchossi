@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>역점 도출</title>
+    <title>목림 역점</title>
     <style>
       .center {
         text-align: center;
@@ -17,24 +17,42 @@
         display: inline-block;
         font-size: 16px;
       }
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
-   <div class="center">
-    <h1>역점 도출</h1>
-    <p>Click on one of the buttons below to navigate to a page:</p>
-    <button onclick="location.href='몽림카드 v1.html'">몽림카드</button>
-    <button onclick="location.href='고도카드 v4.html'">고도카드</button>
-    <button onclick="location.href='몽효카드 v1.html'">몽효카드</button>
-    <button onclick="location.href='고도역 6면체 v2.html'">주역 6</button>
-    <button onclick="location.href='고도역 886 v1.html'">주역 8</button>
-    <button onclick="location.href='꿈씨역림 v3.html'">몽씨역림</button>
-    <button onclick="location.href='초씨역림4096 v7.html'">초씨역림</button>
-    <button onclick="location.href='고도역384 v5.html'">고도384</button>
-    <button onclick="location.href='주역 3변서 v6.html'">(A)</button>
-    <button onclick="location.href='괘기역림.html'">(B)</button>
-    <button onclick="location.href='백서역림 순서오류.html'">(C)</button>
-    <button onclick="location.href='백서역림 숫자오류.html'">(D)</button>
-    <button onclick="location.href='꿈씨역림0001 v1.html'">(E)</button>
-   </body>
+    <div class="center">
+      <h1>목림 역점</h1>
+      <p>선택하세요</p>
+      <button onclick="location.href='고도오라클 v1.html'">고도오라클</button>
+      <button onclick="location.href='몽림오라클 v1.html'">몽림오라클</button>
+      <button onclick="location.href='고도카드 v4.html'">고도카드</button>
+      <button onclick="location.href='몽림카드 v1.html'">몽림카드</button>
+      <button onclick="location.href='고도역 6면체 v2.html'">주역 6</button>
+      <button onclick="location.href='고도역 886 v1.html'">주역 8</button>
+      <button onclick="toggleButtons()">Show/Hide</button>
+      <div id="unusedButtons" class="hidden">
+        <button onclick="location.href='꿈씨역림 v3.html'">몽씨역림</button>
+        <button onclick="location.href='초씨역림4096 v7.html'">초씨역림</button>
+        <button onclick="location.href='고도역384 v5.html'">고도384</button>
+        <button onclick="location.href='주역 3변서 v6.html'">(주역3변서)</button>
+        <button onclick="location.href='괘기역림.html'">(괘기역)</button>
+        <button onclick="location.href='백서역림 순서오류.html'">(백서역1)</button>
+        <button onclick="location.href='백서역림 숫자오류.html'">(백서역2)</button>
+        <button onclick="location.href='꿈씨역림0001 v1.html'">(몽림0001)</button>
+      </div>
+    </div>
+    <script>
+      function toggleButtons() {
+        var x = document.getElementById("unusedButtons");
+        if (x.classList.contains("hidden")) {
+          x.classList.remove("hidden");
+        } else {
+          x.classList.add("hidden");
+        }
+      }
+    </script>
+  </body>
 </html>
